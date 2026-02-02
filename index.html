@@ -8,20 +8,75 @@
   <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <!-- Soft Romantic Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Allura&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background: linear-gradient(180deg, #090909, #1a0010);
-      color: #f3f3f3;
-      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #14080f, #060406);
+      color: #f4eef1;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
       overflow: hidden;
+      position: relative;
+    }
+
+    /* 🌫️ Subtle vignette */
+    body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(0,0,0,0) 55%,
+        rgba(0,0,0,0.35) 100%
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* 🌸 Soft floral ambience */
+    body::before {
+      content: "✿";
+      position: absolute;
+      font-size: 150px;
+      color: rgba(255, 182, 193, 0.07);
+      top: 40px;
+      left: 40px;
+      font-family: 'Playfair Display', serif;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(2px);
+    }
+
+    /* 🎞️ Film grain overlay */
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        repeating-radial-gradient(
+          circle at 0 0,
+          rgba(255,255,255,0.025),
+          rgba(255,255,255,0.025) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+      opacity: 0.08;
+      animation: grainMove 6s steps(6) infinite;
+      z-index: 1;
+    }
+
+    @keyframes grainMove {
+      0% { transform: translate(0,0); }
+      25% { transform: translate(-1px,1px); }
+      50% { transform: translate(1px,-1px); }
+      75% { transform: translate(-1px,-1px); }
+      100% { transform: translate(0,0); }
     }
 
     .screen {
@@ -29,49 +84,50 @@
       max-width: 720px;
       padding: 24px;
       animation: fadeIn 1.8s ease;
+      position: relative;
+      z-index: 2;
     }
 
     .intro {
-      font-size: 1rem;
-      opacity: 0.75;
-      margin-bottom: 24px;
-      letter-spacing: 0.5px;
+      font-family: 'Allura', cursive;
+      font-size: 1.9rem;
+      opacity: 0.85;
+      margin-bottom: 22px;
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3.2rem;
-      margin-bottom: 12px;
+      font-size: 3.3rem;
+      margin-bottom: 14px;
     }
 
     .question {
       font-size: 1.15rem;
       opacity: 0.9;
-      margin-bottom: 48px;
+      margin-bottom: 46px;
     }
 
+    /* Buttons – stable layout */
     .buttons {
-      position: relative;
-      height: 60px;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 24px;
+      gap: 56px;
     }
 
     button {
-      padding: 14px 42px;
-      border-radius: 40px;
+      padding: 14px 46px;
+      border-radius: 50px;
       border: none;
       font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
       font-family: 'Inter', sans-serif;
     }
 
     .yes {
-      background: linear-gradient(135deg, #d4af37, #b8962e);
-      color: #000;
+      background: linear-gradient(135deg, #e8c2c8, #d3a2aa);
+      color: #14080f;
+      cursor: pointer;
+      transition: transform 0.3s ease;
     }
 
     .yes:hover {
@@ -80,9 +136,17 @@
 
     .no {
       background: transparent;
-      color: #cfcfcf;
-      border: 1px solid #666;
-      position: absolute;
+      color: #d7cdd2;
+      border: 1px solid rgba(255,255,255,0.35);
+      pointer-events: none;
+      opacity: 0.85;
+      animation: dreamyFloat 9.5s ease-in-out infinite;
+    }
+
+    @keyframes dreamyFloat {
+      0%   { transform: translate(0px, 0px); }
+      50%  { transform: translate(8px, -16px); }
+      100% { transform: translate(0px, 0px); }
     }
 
     .hidden {
@@ -91,14 +155,21 @@
 
     .final h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
-      margin-bottom: 16px;
+      font-size: 2.5rem;
+      margin-bottom: 18px;
     }
 
     .final p {
       font-size: 1.05rem;
       opacity: 0.85;
-      line-height: 1.6;
+      line-height: 1.65;
+    }
+
+    .flowers {
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+      opacity: 0.85;
+      filter: blur(1.5px);
     }
 
     .song {
@@ -108,19 +179,20 @@
     }
 
     .song a {
-      color: #d4af37;
+      color: #e8c2c8;
       text-decoration: none;
-      border-bottom: 1px solid #d4af37;
+      border-bottom: 1px solid #e8c2c8;
       padding-bottom: 2px;
     }
 
     footer {
       position: absolute;
-      bottom: 20px;
+      bottom: 18px;
       width: 100%;
       text-align: center;
       font-size: 0.75rem;
       opacity: 0.35;
+      z-index: 2;
     }
 
     @keyframes fadeIn {
@@ -132,59 +204,54 @@
 
 <body>
 
+  <!-- Grain -->
+  <div class="grain"></div>
+
   <!-- QUESTION -->
   <div class="screen" id="question">
     <div class="intro">Some feelings grow quietly.</div>
-
     <h1>Pooja</h1>
-
-    <div class="question">
-      Will you be my Valentine?
-    </div>
+    <div class="question">Will you be my Valentine?</div>
 
     <div class="buttons">
       <button class="yes" onclick="sayYes()">Yes</button>
-      <button class="no" id="noBtn" onmouseover="moveNo()">No</button>
+      <button class="no">No</button>
     </div>
   </div>
 
   <!-- FINAL -->
   <div class="screen hidden final" id="final">
+    <div class="flowers">🌸 🌷 🌹</div>
     <h2>I’m really glad you’re here.</h2>
-
     <p>
-      This isn’t about a single day.  
-      It’s about choosing something gently,  
-      and seeing where it leads.
+      This isn’t about a single day.<br>
+      It’s about choosing something gently,<br>
+      and letting it unfold.
     </p>
 
     <div class="song">
-      🎵 <a href="https://www.youtube.com/watch?v=kPa7bsKwL-c" target="_blank">
+      🎵 <a href="https://www.youtube.com/results?search_query=die+with+a+smile+bruno+mars+lady+gaga" target="_blank">
         Our song — Die With a Smile
       </a>
     </div>
   </div>
 
-  <footer>Made with honesty</footer>
+  <footer>Made with sincerity</footer>
 
   <script>
-    function moveNo() {
-      const btn = document.getElementById("noBtn");
-      const x = Math.random() * 220 - 110;
-      const y = Math.random() * 100 - 50;
-      btn.style.transform = `translate(${x}px, ${y}px)`;
-    }
-
     function sayYes() {
       document.getElementById("question").classList.add("hidden");
       document.getElementById("final").classList.remove("hidden");
 
-      confetti({
-        particleCount: 140,
-        spread: 90,
-        startVelocity: 32,
-        origin: { y: 0.65 }
-      });
+      /* 🎉 Confetti synced to emotional beat */
+      setTimeout(() => {
+        confetti({
+          particleCount: 90,
+          spread: 70,
+          startVelocity: 22,
+          origin: { y: 0.68 }
+        });
+      }, 600);
     }
   </script>
 
