@@ -2,160 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pooja — Will You Be My Valentine?</title>
+  <title>Pooja</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;500&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
+      margin: 0;
       height: 100vh;
-      background: radial-gradient(circle at top, #2b0015, #000);
-      color: #f5f5f5;
+      background: linear-gradient(180deg, #0b0b0b, #1a0010);
+      color: #f2f2f2;
+      font-family: 'Inter', sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Inter', sans-serif;
       overflow: hidden;
     }
 
-    .container {
+    .screen {
       text-align: center;
-      padding: 20px;
-      animation: fadeIn 1.2s ease;
+      max-width: 700px;
+      padding: 24px;
+      animation: fadeIn 1.5s ease;
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 10px;
+      font-size: 3rem;
+      margin-bottom: 12px;
     }
 
-    h2 {
-      font-weight: 300;
-      opacity: 0.85;
+    p {
+      font-size: 1.1rem;
+      opacity: 0.8;
       margin-bottom: 40px;
     }
 
     .buttons {
+      margin-top: 20px;
       position: relative;
-      display: flex;
-      gap: 24px;
-      justify-content: center;
     }
 
     button {
-      padding: 14px 40px;
+      padding: 14px 38px;
       border-radius: 40px;
       border: none;
-      font-size: 1.05rem;
+      font-size: 1rem;
       cursor: pointer;
+      margin: 0 12px;
       transition: all 0.25s ease;
-      font-family: 'Inter', sans-serif;
     }
 
     .yes {
       background: linear-gradient(135deg, #d4af37, #b8962e);
       color: #000;
-      font-weight: 500;
-    }
-
-    .yes:hover {
-      transform: scale(1.08);
     }
 
     .no {
       background: transparent;
-      border: 1px solid #777;
       color: #ccc;
+      border: 1px solid #666;
       position: absolute;
-      left: 55%;
     }
 
     .hidden {
       display: none;
     }
 
-    .final {
-      animation: fadeIn 1s ease;
+    .final h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      margin-bottom: 16px;
     }
 
-    .dog {
-      font-size: 5rem;
-      margin-bottom: 20px;
+    .song {
+      margin-top: 30px;
+      font-size: 0.95rem;
+    }
+
+    .song a {
+      color: #d4af37;
+      text-decoration: none;
+      border-bottom: 1px solid #d4af37;
+      padding-bottom: 2px;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    footer {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.8rem;
-      opacity: 0.4;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Hidden YouTube Audio -->
-  <iframe
-    id="music"
-    width="0"
-    height="0"
-    src="https://www.youtube.com/embed/4GFubdyD370?autoplay=1&loop=1&playlist=4GFubdyD370"
-    frameborder="0"
-    allow="autoplay">
-  </iframe>
-
-  <div class="container" id="main">
+  <!-- QUESTION -->
+  <div class="screen" id="question">
+    <p>Some moments deserve courage.</p>
     <h1>Pooja</h1>
-    <h2>Will you be my Valentine?</h2>
+    <p>Will you be my Valentine?</p>
 
     <div class="buttons">
-      <button class="yes" onclick="accept()">Yes</button>
-      <button class="no" id="noBtn" onmouseover="moveNo()">No</button>
+      <button class="yes" onclick="sayYes()">Yes</button>
+      <button class="no" id="noBtn" onmouseover="runAway()">No</button>
     </div>
   </div>
 
-  <div class="container hidden final" id="final">
-    <div class="dog">🐶❤️</div>
-    <h1>Forever sounds good.</h1>
-    <h2>I’m glad you said yes.</h2>
+  <!-- FINAL -->
+  <div class="screen hidden final" id="final">
+    <h2>I’m glad you chose this.</h2>
+    <p>Some stories deserve a beginning.</p>
+
+    <div class="song">
+      🎵 <a href="https://www.youtube.com/results?search_query=die+with+a+smile+bruno+mars+lady+gaga" target="_blank">
+        Play our song — Die With a Smile
+      </a>
+    </div>
   </div>
 
-  <footer>Made with intention</footer>
-
   <script>
-    function moveNo() {
+    function runAway() {
       const btn = document.getElementById("noBtn");
-      const x = Math.random() * 260 - 130;
-      const y = Math.random() * 180 - 90;
+      const x = Math.random() * 240 - 120;
+      const y = Math.random() * 120 - 60;
       btn.style.transform = `translate(${x}px, ${y}px)`;
     }
 
-    function accept() {
-      document.getElementById("main").classList.add("hidden");
+    function sayYes() {
+      document.getElementById("question").classList.add("hidden");
       document.getElementById("final").classList.remove("hidden");
 
       confetti({
-        particleCount: 180,
+        particleCount: 160,
         spread: 100,
         startVelocity: 35,
         origin: { y: 0.6 }
