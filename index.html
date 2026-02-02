@@ -15,8 +15,8 @@
     body {
       margin: 0;
       height: 100vh;
-      background: #000;
-      color: #eaeaea;
+      background: linear-gradient(180deg, #090909, #1a0010);
+      color: #f3f3f3;
       font-family: 'Inter', sans-serif;
       display: flex;
       align-items: center;
@@ -28,59 +28,61 @@
       text-align: center;
       max-width: 720px;
       padding: 24px;
-      opacity: 0;
-      animation: fadeIn 2s forwards;
+      animation: fadeIn 1.8s ease;
     }
 
-    .line {
+    .intro {
       font-size: 1rem;
-      letter-spacing: 0.6px;
       opacity: 0.75;
-      margin-bottom: 40px;
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3.4rem;
-      margin-bottom: 20px;
+      font-size: 3.2rem;
+      margin-bottom: 12px;
     }
 
     .question {
-      font-size: 1.2rem;
-      margin-bottom: 60px;
+      font-size: 1.15rem;
       opacity: 0.9;
+      margin-bottom: 48px;
     }
 
     .buttons {
+      position: relative;
+      height: 60px;
       display: flex;
-      justify-content: space-between;
-      max-width: 360px;
-      margin: 0 auto;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
     }
 
     button {
-      padding: 14px 36px;
-      font-size: 1rem;
+      padding: 14px 42px;
       border-radius: 40px;
       border: none;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
       font-family: 'Inter', sans-serif;
     }
 
     .yes {
-      background: #e6c15a;
+      background: linear-gradient(135deg, #d4af37, #b8962e);
       color: #000;
+    }
+
+    .yes:hover {
+      transform: scale(1.05);
     }
 
     .no {
       background: transparent;
-      border: 1px solid #777;
-      color: #aaa;
-    }
-
-    button:hover {
-      transform: scale(1.05);
+      color: #cfcfcf;
+      border: 1px solid #666;
+      position: absolute;
     }
 
     .hidden {
@@ -89,7 +91,7 @@
 
     .final h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       margin-bottom: 16px;
     }
 
@@ -101,27 +103,38 @@
 
     .song {
       margin-top: 36px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      opacity: 0.85;
     }
 
     .song a {
-      color: #e6c15a;
+      color: #d4af37;
       text-decoration: none;
-      border-bottom: 1px solid #e6c15a;
+      border-bottom: 1px solid #d4af37;
       padding-bottom: 2px;
     }
 
+    footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.75rem;
+      opacity: 0.35;
+    }
+
     @keyframes fadeIn {
-      to { opacity: 1; }
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ACT II -->
+  <!-- QUESTION -->
   <div class="screen" id="question">
-    <div class="line">Some decisions change how you remember a year.</div>
+    <div class="intro">Some feelings grow quietly.</div>
 
     <h1>Pooja</h1>
 
@@ -130,31 +143,50 @@
     </div>
 
     <div class="buttons">
-      <button class="yes" onclick="yes()">Yes</button>
-      <button class="no" onclick="no()">No</button>
+      <button class="yes" onclick="sayYes()">Yes</button>
+      <button class="no" id="noBtn" onmouseover="moveNo()">No</button>
     </div>
   </div>
 
-  <!-- YES -->
-  <div class="screen hidden final" id="yesScreen">
-    <h2>Then let’s begin.</h2>
+  <!-- FINAL -->
+  <div class="screen hidden final" id="final">
+    <h2>I’m really glad you’re here.</h2>
+
     <p>
-      Not loudly.  
-      Not hurriedly.  
-      Just honestly.
+      This isn’t about a single day.  
+      It’s about choosing something gently,  
+      and seeing where it leads.
     </p>
 
     <div class="song">
-      🎵 <a href="https://www.youtube.com/results?search_query=die+with+a+smile+bruno+mars+lady+gaga" target="_blank">
-        Die With a Smile
+      🎵 <a href="https://www.youtube.com/watch?v=kPa7bsKwL-c" target="_blank">
+        Our song — Die With a Smile
       </a>
     </div>
   </div>
 
-  <!-- NO -->
-  <div class="screen hidden final" id="noScreen">
-    <h2>That’s okay.</h2>
-    <p>
-      Thank you for the honesty.  
-      Some things are still meaningful, even unanswered.
-    </p
+  <footer>Made with honesty</footer>
+
+  <script>
+    function moveNo() {
+      const btn = document.getElementById("noBtn");
+      const x = Math.random() * 220 - 110;
+      const y = Math.random() * 100 - 50;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function sayYes() {
+      document.getElementById("question").classList.add("hidden");
+      document.getElementById("final").classList.remove("hidden");
+
+      confetti({
+        particleCount: 140,
+        spread: 90,
+        startVelocity: 32,
+        origin: { y: 0.65 }
+      });
+    }
+  </script>
+
+</body>
+</html>
